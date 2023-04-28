@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour {
 
     Vector3 playerVelocity;
     Vector3 move = Vector3.zero;
+    Animator animator;
 
     Vector3 screenPosition;
     Vector3 worldPosition;
@@ -35,6 +36,8 @@ public class PlayerController : MonoBehaviour {
     float healthSmoothCount;
     float healthFillAmount;
 
+    float prevangle;
+
     // Player States
     bool isSprinting = false;
     bool isMeleeing = false;
@@ -44,7 +47,7 @@ public class PlayerController : MonoBehaviour {
     void Start() {
         playerSpeedOriginal = playerSpeed;
         HPOrig = HP;
-
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -62,29 +65,25 @@ public class PlayerController : MonoBehaviour {
     }
 
     void PlayerMovement() {
-        screenPosition = Input.mousePosition;
-        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hitData, 10000, layersToHit)) {
-            worldPosition = hitData.point;
-            Debug.Log("Hitting");
-        }
-        Debug.DrawLine(cameraMain.transform.position, worldPosition);
-
-        mouseDir = worldPosition - transform.position;
-
-        float angle = Vector3.Angle(new Vector3(transform.forward.x, 0, transform.forward.z), new Vector3(mouseDir.x, 0, mouseDir.z));
-        if (angle > 2)
-            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y + angle, transform.localEulerAngles.z); 
-        //camRotPoint.transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y + angle, transform.rotation.z);
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y));
+        Vector3 direction = mousePos - transform.position;
+        float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
+        float playerAngle = transform.eulerAngles.y;
 
         //Getting input from Unity Input Manager
         move = (new Vector3(1, 0, 0) * Input.GetAxis("Horizontal")) + (new Vector3(0, 0, 1) * Input.GetAxis("Vertical"));
+        if (move != Vector3.zero)
+            animator.SetBool("Moving", true);
+        else
+            animator.SetBool("Moving", true);
 
         //Adding the move vector to the character controller
         controller.Move(move * playerSpeed * Time.deltaTime);
 
         controller.Move(playerVelocity * Time.deltaTime);
+
+        camRotPoint.transform.position = transform.position;
     }
 
     public void Respawn() {

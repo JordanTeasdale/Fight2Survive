@@ -211,11 +211,15 @@ PrefabInstance:
     - target: {fileID: 3817136778348092500, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
       propertyPath: animator
       value: 
-      objectReference: {fileID: 4634507623619148728}
+      objectReference: {fileID: 0}
     - target: {fileID: 3817136778348092500, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
       propertyPath: cameraMain
       value: 
       objectReference: {fileID: 5729855542986490385}
+    - target: {fileID: 3817136778348092500, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
+      propertyPath: attackSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3817136778348092500, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
       propertyPath: camRotPoint
       value: 
@@ -223,6 +227,10 @@ PrefabInstance:
     - target: {fileID: 3817136778348092500, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
       propertyPath: playerSpeed
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5017534650387526875, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5759559623152616827, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
       propertyPath: controller
@@ -240,32 +248,6 @@ PrefabInstance:
     - {fileID: 5759559623152616827, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
     - {fileID: 5400000, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
---- !u!1 &5729855544437754256 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100004, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-  m_PrefabInstance: {fileID: 5729855544437657396}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &4634507623619148728
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5729855544437754256}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 25f76e473f551e64a8438e7c32a0ec8e, type: 3}
-  m_Controller: {fileID: 9100000, guid: 7ff0cf27ed8e9684b9bdd381bab1f846, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &5729855544437790128 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}

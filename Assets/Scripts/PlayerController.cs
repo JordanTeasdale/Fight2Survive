@@ -17,43 +17,50 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] float playerSpeed;
     [SerializeField] float sprintMulti;
+    [SerializeField] float attackSpeed;
+    [SerializeField] float comboTime;
     [Range(1, 100)] public int HP;
     public bool isDead;
+
+    public event System.Action<AnimationEvent> OnSwing;
 
 
     Vector3 playerVelocity;
     Vector3 move = Vector3.zero;
     Animator animator;
 
-    Vector3 screenPosition;
-    Vector3 worldPosition;
-    Vector3 mouseDir;
-
-    float playerSpeedOriginal;
     public int HPOrig;
     int prevHP;
     float healthSmoothTime = 0.5f;
     float healthSmoothCount;
     float healthFillAmount;
 
-    float prevangle;
-
     // Player States
-    bool isSprinting = false;
-    bool isMeleeing = false;
+    bool isAttacking = false;
+    public int ComboNumber = 0;
+    float comboTimer;
 
 
     // Start is called before the first frame update
     void Start() {
-        playerSpeedOriginal = playerSpeed;
         HPOrig = HP;
         animator = GetComponentInChildren<Animator>();
+        comboTimer = 0;
     }
 
     // Update is called once per frame
     void Update() {
         if (!isDead)
             PlayerMovement();
+
+        if (Input.GetKeyDown("mouse 0")) {
+            StartCoroutine(Attack());
+        }
+
+        comboTimer -= Time.deltaTime;
+        if (comboTimer < 0) {
+            ComboNumber = 1;
+        }
     }
 
     void FixedUpdate() {
@@ -73,15 +80,18 @@ public class PlayerController : MonoBehaviour {
 
         //Getting input from Unity Input Manager
         move = (new Vector3(1, 0, 0) * Input.GetAxis("Horizontal")) + (new Vector3(0, 0, 1) * Input.GetAxis("Vertical"));
-        if (move != Vector3.zero)
-            animator.SetBool("Moving", true);
-        else
-            animator.SetBool("Moving", true);
 
         //Adding the move vector to the character controller
         controller.Move(move * playerSpeed * Time.deltaTime);
 
         controller.Move(playerVelocity * Time.deltaTime);
+
+        if (move != Vector3.zero) {
+            animator.SetBool("Moving", true);
+            animator.SetFloat("Velocity X", Vector3.Dot(transform.right, move));
+            animator.SetFloat("Velocity Z", Vector3.Dot(transform.forward, move));
+        } else
+            animator.SetBool("Moving", false);
 
         camRotPoint.transform.position = transform.position;
     }
@@ -112,5 +122,22 @@ public class PlayerController : MonoBehaviour {
 
     public void UpdateHP() {
         //GameManager.instance.playerHPBar.fillAmount = healthFillAmount / HPOrig;
+    }
+
+    IEnumerator Attack() {
+        if (!isAttacking) {
+            isAttacking = true;
+            animator.SetTrigger("Attack");
+            animator.SetInteger("Action", ComboNumber);
+            ComboNumber++;
+            if (ComboNumber > 3)
+                comboTimer = 0;
+            else
+                comboTimer = comboTime;
+            Debug.Log("Howdy");
+            yield return new WaitForSeconds(attackSpeed);
+            isAttacking = false;
+            animator.SetInteger("Action", 0);
+        }
     }
 }

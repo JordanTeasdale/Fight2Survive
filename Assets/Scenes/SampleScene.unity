@@ -783,7 +783,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23146
+  m_Name: pb_Mesh23132
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -996,6 +996,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerHolder
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4634507623619148728, guid: b2415d765775a2f4b9e1d3960ad130ba, type: 3}
+    - target: {fileID: 8898471777270109024, guid: b2415d765775a2f4b9e1d3960ad130ba, type: 3}
+      propertyPath: comboTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898471777270109024, guid: b2415d765775a2f4b9e1d3960ad130ba, type: 3}
+      propertyPath: attackSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2415d765775a2f4b9e1d3960ad130ba, type: 3}

@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour {
             player = GameObject.FindGameObjectWithTag("Player");
             playerScript = player.GetComponent<PlayerController>();
 
-            RespawnPos = GameObject.FindGameObjectWithTag("Respawn Pos");
+            //RespawnPos = GameObject.FindGameObjectWithTag("Respawn Pos");
             playerScript.Respawn();
 
 

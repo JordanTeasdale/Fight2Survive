@@ -4,21 +4,20 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IDamageable {
     [SerializeField] LayerMask layersToHit;
 
     [Header("-----Components-----")]
-
     [SerializeField] CharacterController controller;
     public GameObject cameraMain;
     [SerializeField] GameObject camRotPoint;
 
     [Header("-----Player Attributes-----")]
-
     [SerializeField] float playerSpeed;
     [SerializeField] float sprintMulti;
     [SerializeField] float attackSpeed;
     [SerializeField] float comboTime;
+    [SerializeField] float invincibilityTimer;
     [Range(1, 100)] public int HP;
     public bool isDead;
 
@@ -28,12 +27,14 @@ public class PlayerController : MonoBehaviour {
     Vector3 playerVelocity;
     Vector3 move = Vector3.zero;
     Animator animator;
+    public SkinnedMeshRenderer rend;
 
     public int HPOrig;
     int prevHP;
     float healthSmoothTime = 0.5f;
     float healthSmoothCount;
     float healthFillAmount;
+    float damageTimer;
 
     // Player States
     bool isAttacking = false;
@@ -45,11 +46,15 @@ public class PlayerController : MonoBehaviour {
     void Start() {
         HPOrig = HP;
         animator = GetComponentInChildren<Animator>();
+        rend = transform.GetChild(0).GetComponentInChildren<SkinnedMeshRenderer>();
         comboTimer = 0;
     }
 
     // Update is called once per frame
     void Update() {
+        if (damageTimer > 0)
+            damageTimer -= Time.deltaTime;
+
         if (!isDead)
             PlayerMovement();
 
@@ -99,10 +104,40 @@ public class PlayerController : MonoBehaviour {
     public void Respawn() {
         isDead = false;
         healthSmoothCount = 0;
-        controller.enabled = false;
+        //controller.enabled = false;
         transform.position = GameManager.instance.RespawnPos.transform.position;
         controller.enabled = true;
 
+    }
+
+    public void TakeDamage(int _damage) {
+        if (damageTimer <= 0) {
+            damageTimer = invincibilityTimer;
+
+            if (_damage > HP)
+                _damage = HP;
+
+            if (healthFillAmount == HP) {
+                healthSmoothCount = 0;
+                prevHP = HP;
+            }
+            HP -= _damage;
+
+            if (_damage > 0) {
+                //UpdateHP();
+                StartCoroutine(DamageFlash());
+                if (HP <= 0) {
+                    // Kill the player
+                    StartCoroutine(Death());
+                }
+            }
+        }
+    }
+
+    IEnumerator DamageFlash() {
+        rend.material.color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+        rend.material.color = Color.white;
     }
 
     public IEnumerator Death() {

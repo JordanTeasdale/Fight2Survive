@@ -3,5 +3,5 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface IDamageable {
-    void TakeDamage(int _damage);
+    IEnumerator TakeDamage(int _damage, float _knockback);
 }

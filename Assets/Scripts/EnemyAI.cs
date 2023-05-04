@@ -10,11 +10,13 @@ public class EnemyAI : MonoBehaviour, IDamageable
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer rend;
     [SerializeField] Animator anim;
+    [SerializeField] Rigidbody rb;
 
     [Header("----- Enemy Stats -----")]
     [Range(0, 500)] public int HP;
     [Range(0, 10)][SerializeField] int playerFaceSpeed;
     [Range(1, 20)][SerializeField] float speedChase;
+    [SerializeField] float invincibilityTimer;
 
     [Header("----- Weapons Stats -----")]
     [Range(0.1f, 5)][SerializeField] float attackRate;
@@ -25,12 +27,15 @@ public class EnemyAI : MonoBehaviour, IDamageable
     private int HPOrig;
 
     float stoppingDistanceOrig;
+    float damageTimer;
 
     Vector3 raycastPos;
 
     // Start is called before the first frame update
     void Start()
     {
+        //anim = GetComponentInChildren<Animator>();
+        rend = GetComponentInChildren<SkinnedMeshRenderer>();
         stoppingDistanceOrig = agent.stoppingDistance;
         HPOrig = HP;
     }
@@ -38,6 +43,9 @@ public class EnemyAI : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
+        if (damageTimer > 0)
+            damageTimer -= Time.deltaTime;
+
         raycastPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
         if (agent.isActiveAndEnabled /*&& !anim.GetBool("Dead")*/) {
             
@@ -68,20 +76,32 @@ public class EnemyAI : MonoBehaviour, IDamageable
     }
 
     IEnumerator Attack() {
+        if (!isAttacking) {
+            isAttacking = true;
+            agent.isStopped = true;
+            anim.SetTrigger("Attack");
+            Debug.Log("Attack");
+            yield return new WaitForSeconds(1f);
 
-
-        yield return null;
+            isAttacking = false;
+        }
+        agent.isStopped = false;
     }
 
-    public void TakeDamage(int _damage) {
-        if (!anim.GetBool("Dead") && agent.isActiveAndEnabled) {
-            HP -= damage;
+    public IEnumerator TakeDamage(int _damage, float _knockback) {
+        if (damageTimer <= 0) {
+            damageTimer = invincibilityTimer;
+            if (!anim.GetBool("Dead")) {
+                HP -= damage;
 
-            if (HP > 0) {
-                //anim.SetTrigger("Damage");
-                StartCoroutine(FlashColor());
-            } else if (HP <= 0) {
-                Die();
+                if (HP > 0) {
+                    anim.SetInteger("DamageType", 2);
+                    anim.SetTrigger("Damage");
+                    StartCoroutine(FlashColor());
+                    yield return new WaitForSeconds(0.5f);
+                } else if (HP <= 0) {
+                    Die();
+                }
             }
         }
     }
@@ -91,8 +111,6 @@ public class EnemyAI : MonoBehaviour, IDamageable
         agent.speed = 0;
         yield return new WaitForSeconds(0.5f);
         agent.speed = speedChase;
-        if (HP > 0)
-            agent.SetDestination(GameManager.instance.player.transform.position);
         agent.stoppingDistance = 0;
         rend.material.color = Color.white;
     }

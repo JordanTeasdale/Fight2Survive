@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
     [SerializeField] CharacterController controller;
     public GameObject cameraMain;
     [SerializeField] GameObject camRotPoint;
+    [SerializeField] BoxCollider attackBox;
 
     [Header("-----Player Attributes-----")]
     [SerializeField] float playerSpeed;
@@ -18,6 +19,9 @@ public class PlayerController : MonoBehaviour, IDamageable {
     [SerializeField] float attackSpeed;
     [SerializeField] float comboTime;
     [SerializeField] float invincibilityTimer;
+    [SerializeField] int damage;
+    [SerializeField] float baseKnockback;
+    [SerializeField] float finalKnockback;
     [Range(1, 100)] public int HP;
     public bool isDead;
 
@@ -46,6 +50,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
     void Start() {
         HPOrig = HP;
         animator = GetComponentInChildren<Animator>();
+        attackBox = GetComponentInChildren<BoxCollider>();
         rend = transform.GetChild(0).GetComponentInChildren<SkinnedMeshRenderer>();
         comboTimer = 0;
     }
@@ -110,7 +115,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     }
 
-    public void TakeDamage(int _damage) {
+    public IEnumerator TakeDamage(int _damage, float _knockback) {
         if (damageTimer <= 0) {
             damageTimer = invincibilityTimer;
 
@@ -132,6 +137,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
                 }
             }
         }
+        yield return null;
     }
 
     IEnumerator DamageFlash() {
@@ -164,15 +170,23 @@ public class PlayerController : MonoBehaviour, IDamageable {
             isAttacking = true;
             animator.SetTrigger("Attack");
             animator.SetInteger("Action", ComboNumber);
+            attackBox.enabled = true;
+            yield return new WaitForSeconds(1f);
+            attackBox.enabled = false;
             ComboNumber++;
             if (ComboNumber > 3)
                 comboTimer = 0;
             else
                 comboTimer = comboTime;
-            Debug.Log("Howdy");
-            yield return new WaitForSeconds(attackSpeed);
+            yield return new WaitForSeconds(attackSpeed - 0.1f);
             isAttacking = false;
             animator.SetInteger("Action", 0);
+        }
+    }
+
+    private void OnTriggerStay(Collider other) {
+        if (other.TryGetComponent<IDamageable>(out IDamageable obj) && !other.CompareTag(this.tag)) {
+            StartCoroutine(obj.TakeDamage(damage, baseKnockback));
         }
     }
 }

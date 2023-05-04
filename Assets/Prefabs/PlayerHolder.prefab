@@ -205,8 +205,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 13681452, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 13681452, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2835553132922688860, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
       propertyPath: orthographic
@@ -216,6 +220,10 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3817136778348092500, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
+      propertyPath: attackBox
+      value: 
+      objectReference: {fileID: 2263924868386348610}
     - target: {fileID: 3817136778348092500, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
       propertyPath: cameraMain
       value: 
@@ -252,6 +260,24 @@ PrefabInstance:
     - {fileID: 5759559623152616827, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
     - {fileID: 5400000, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
+--- !u!1 &5729855544437754256 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100004, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
+  m_PrefabInstance: {fileID: 5729855544437657396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2263924868386348610
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5729855544437754256}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.5540743, y: 1.8633908, z: 3.172224}
+  m_Center: {x: 0.008065931, y: -0.4316954, z: 2.2159085}
 --- !u!4 &5729855544437790128 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}

@@ -24,7 +24,8 @@ public class PlayerController : MonoBehaviour, IDamageable {
     [SerializeField] float baseStun;
     [SerializeField] float finalStun;
     [Range(1, 100)] public int HP;
-    public bool isDead;
+    public bool isDead = false;
+    public bool fullyRevived = true;
 
     public event System.Action<AnimationEvent> OnSwing;
 
@@ -61,11 +62,13 @@ public class PlayerController : MonoBehaviour, IDamageable {
         if (damageTimer > 0)
             damageTimer -= Time.deltaTime;
 
-        if (!isDead)
+        if (!isDead && fullyRevived) {
+            Debug.Log("Active");
             PlayerMovement();
 
-        if (Input.GetKeyDown("mouse 0")) {
-            StartCoroutine(Attack());
+            if (Input.GetKeyDown("mouse 0")) {
+                StartCoroutine(Attack());
+            }
         }
 
         comboTimer -= Time.deltaTime;
@@ -130,11 +133,13 @@ public class PlayerController : MonoBehaviour, IDamageable {
             HP -= _damage;
 
             if (_damage > 0) {
-                //UpdateHP();
+                UpdateHP();
                 StartCoroutine(DamageFlash());
                 if (HP <= 0) {
                     // Kill the player
-                    StartCoroutine(Death());
+                    fullyRevived = false;
+                    animator.SetTrigger("Dead");
+                    StartCoroutine(FirstDeath());
                 }
             }
         }
@@ -146,15 +151,11 @@ public class PlayerController : MonoBehaviour, IDamageable {
         rend.material.color = Color.white;
     }
 
-    public IEnumerator Death() {
+    public IEnumerator FirstDeath() {
         isDead = true;
-        cameraMain.GetComponent<Animator>().enabled = true;
-        cameraMain.GetComponent<Animator>().SetTrigger("isDead");
         yield return new WaitForSeconds(1.728f);
-        GameManager.instance.CursorLockPause();
-        GameManager.instance.playerDeadMenu.SetActive(true);
-        GameManager.instance.menuCurrentlyOpen = GameManager.instance.playerDeadMenu;
-        GameManager.instance.isPaused = true;
+        //GameManager.instance.CursorLockPause();
+        //GameManager.instance.isPaused = true;
     }
 
     public void ResetHP() {
@@ -182,6 +183,16 @@ public class PlayerController : MonoBehaviour, IDamageable {
             else
                 comboTimer = comboTime;
         }
+    }
+
+    public void Revive() {
+        damageTimer = 5;
+        isDead = false;
+        HP = HPOrig / 2;
+        UpdateHP();
+        animator.SetTrigger("Revived");
+        Time.timeScale = 1;
+        fullyRevived = true;
     }
 
     private void OnTriggerEnter(Collider other) {

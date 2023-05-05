@@ -18,21 +18,16 @@ public class GameManager : MonoBehaviour {
     public GameObject checkpointFeedback;
 
     public GameObject pauseMenu;
+    public GameObject perseveranceMenu;
     public GameObject playerDeadMenu;
     public GameObject playerClearedLevel1;
     public GameObject playerClearedLevel2;
     public GameObject playerWinMenu;
     public GameObject previousMenu = null;
     public GameObject menuCurrentlyOpen;
-    public GameObject optionsMenu;
-    public GameObject playerDamageFlash;
-    public GameObject ammoMagGUI;
-    public GameObject reticle;
-    public GameObject radialMenu;
     public Image playerHPBar;
-    public GameObject lowHealthIndicator;
     public GameObject roomClearedFeedback;
-    public AudioMixer mainMixer;
+    public GameObject ScreenFader;
 
     public bool isMainOptionsMenu;
     public bool isPaused = false;
@@ -63,7 +58,7 @@ public class GameManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetButtonDown("Cancel") && playerScript.HP > 0 && !gameOver) {
+        /*if (Input.GetButtonDown("Cancel") && playerScript.HP > 0 && !gameOver) {
 
             isPaused = !isPaused;
 
@@ -83,12 +78,8 @@ public class GameManager : MonoBehaviour {
             else
                 CursorUnlockUnpause();
         }
-        if (playerScript.HP <= playerScript.HPOrig * 0.25 && menuCurrentlyOpen != pauseMenu)
-            lowHealthIndicator.SetActive(true);
-        else if (playerScript.HP > playerScript.HPOrig * 0.25 || menuCurrentlyOpen == pauseMenu)
-            lowHealthIndicator.SetActive(false);
 
-        AccessShowcase();
+        AccessShowcase();*/
     }
 
     private void AccessShowcase() {
@@ -100,28 +91,24 @@ public class GameManager : MonoBehaviour {
     public void CursorLockPause() {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
-        reticle.SetActive(false);
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         playerScript.enabled = false;
     }
     public void CursorLockSlowed() {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
-        reticle.SetActive(false);
         player.GetComponentInChildren<CameraController>().enabled = false;
         Time.timeScale = 0.25f;
     }
     public void CursorUnlockUnslowed() {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        reticle.SetActive(true);
         player.GetComponentInChildren<CameraController>().enabled = true;
         Time.timeScale = 1;
     }
     public void CursorUnlockUnpause() {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        reticle.SetActive(true);
         Time.timeScale = 1;
         playerScript.enabled = true;
     }

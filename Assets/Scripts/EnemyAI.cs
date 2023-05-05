@@ -110,7 +110,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
                     anim.SetTrigger("Damage");
                     StartCoroutine(FlashColor());
                 } else if (HP <= 0) {
-                    Die();
+                    StartCoroutine(Die());
                 }
             }
         }
@@ -125,9 +125,9 @@ public class EnemyAI : MonoBehaviour, IDamageable
         rend.material.color = Color.white;
     }
 
-    public void Die() {
+    public IEnumerator Die() {
         //GameManager.instance.currentRoom.GetComponent<LevelSpawner>().EnemyKilled();
-        //anim.SetBool(("Dead"), true);
+        anim.SetBool(("Dead"), true);
         agent.enabled = false;
         GetComponent<EnemyAI>().enabled = false;
 
@@ -138,6 +138,11 @@ public class EnemyAI : MonoBehaviour, IDamageable
             child.enabled = false;
 
         //GetComponent<Animator>().enabled = false;
+
+        yield return new WaitForSeconds(0.5f);
+        rb.useGravity = true;
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other) {

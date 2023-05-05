@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
     [SerializeField] Renderer rend;
     [SerializeField] Animator anim;
     [SerializeField] Rigidbody rb;
+    [SerializeField] BoxCollider attackBox;
 
     [Header("----- Enemy Stats -----")]
     [Range(0, 500)] public int HP;
@@ -28,6 +29,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     float stoppingDistanceOrig;
     float damageTimer;
+    public float stunTimer;
 
     Vector3 raycastPos;
 
@@ -46,12 +48,18 @@ public class EnemyAI : MonoBehaviour, IDamageable
         if (damageTimer > 0)
             damageTimer -= Time.deltaTime;
 
-        raycastPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-        if (agent.isActiveAndEnabled /*&& !anim.GetBool("Dead")*/) {
-            
-            ApproachPlayer();
+        if (stunTimer > 0) {
+            stunTimer -= Time.deltaTime;
+            agent.speed = 0;
+        } else {
+            agent.speed = speedChase;
+            raycastPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            if (agent.isActiveAndEnabled /*&& !anim.GetBool("Dead")*/) {
 
-            playerDir = GameManager.instance.player.transform.position - raycastPos;
+                ApproachPlayer();
+
+                playerDir = GameManager.instance.player.transform.position - raycastPos;
+            }
         }
     }
 
@@ -80,7 +88,9 @@ public class EnemyAI : MonoBehaviour, IDamageable
             isAttacking = true;
             agent.isStopped = true;
             anim.SetTrigger("Attack");
-            Debug.Log("Attack");
+            attackBox.enabled = true;
+            yield return new WaitForSeconds(0.1f);
+            attackBox.enabled = false;
             yield return new WaitForSeconds(1f);
 
             isAttacking = false;
@@ -88,17 +98,17 @@ public class EnemyAI : MonoBehaviour, IDamageable
         agent.isStopped = false;
     }
 
-    public IEnumerator TakeDamage(int _damage, float _knockback) {
+    public void TakeDamage(int _damage, float _stun) {
+        stunTimer += _stun;
         if (damageTimer <= 0) {
             damageTimer = invincibilityTimer;
             if (!anim.GetBool("Dead")) {
                 HP -= damage;
 
                 if (HP > 0) {
-                    anim.SetInteger("DamageType", 2);
+                    anim.SetInteger("DamageType", 1);
                     anim.SetTrigger("Damage");
                     StartCoroutine(FlashColor());
-                    yield return new WaitForSeconds(0.5f);
                 } else if (HP <= 0) {
                     Die();
                 }
@@ -128,5 +138,11 @@ public class EnemyAI : MonoBehaviour, IDamageable
             child.enabled = false;
 
         //GetComponent<Animator>().enabled = false;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.TryGetComponent<IDamageable>(out IDamageable obj) && other.CompareTag("Player") && other.isTrigger == false) {
+            obj.TakeDamage(damage, 0);
+        }
     }
 }

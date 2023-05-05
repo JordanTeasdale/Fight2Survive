@@ -19,9 +19,10 @@ public class PlayerController : MonoBehaviour, IDamageable {
     [SerializeField] float attackSpeed;
     [SerializeField] float comboTime;
     [SerializeField] float invincibilityTimer;
-    [SerializeField] int damage;
-    [SerializeField] float baseKnockback;
-    [SerializeField] float finalKnockback;
+    [SerializeField] int baseDamage;
+    [SerializeField] int finalDamage;
+    [SerializeField] float baseStun;
+    [SerializeField] float finalStun;
     [Range(1, 100)] public int HP;
     public bool isDead;
 
@@ -115,7 +116,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     }
 
-    public IEnumerator TakeDamage(int _damage, float _knockback) {
+    public void TakeDamage(int _damage, float _stun) {
         if (damageTimer <= 0) {
             damageTimer = invincibilityTimer;
 
@@ -137,7 +138,6 @@ public class PlayerController : MonoBehaviour, IDamageable {
                 }
             }
         }
-        yield return null;
     }
 
     IEnumerator DamageFlash() {
@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
     }
 
     public void UpdateHP() {
-        //GameManager.instance.playerHPBar.fillAmount = healthFillAmount / HPOrig;
+        GameManager.instance.playerHPBar.fillAmount = healthFillAmount / HPOrig;
     }
 
     IEnumerator Attack() {
@@ -170,23 +170,26 @@ public class PlayerController : MonoBehaviour, IDamageable {
             isAttacking = true;
             animator.SetTrigger("Attack");
             animator.SetInteger("Action", ComboNumber);
-            attackBox.enabled = true;
-            yield return new WaitForSeconds(1f);
-            attackBox.enabled = false;
             ComboNumber++;
-            if (ComboNumber > 3)
-                comboTimer = 0;
-            else
-                comboTimer = comboTime;
+            attackBox.enabled = true;
+            yield return new WaitForSeconds(0.5f);
+            attackBox.enabled = false;
             yield return new WaitForSeconds(attackSpeed - 0.1f);
             isAttacking = false;
             animator.SetInteger("Action", 0);
+            if (ComboNumber >= 3)
+                comboTimer = 0;
+            else
+                comboTimer = comboTime;
         }
     }
 
-    private void OnTriggerStay(Collider other) {
-        if (other.TryGetComponent<IDamageable>(out IDamageable obj) && !other.CompareTag(this.tag)) {
-            StartCoroutine(obj.TakeDamage(damage, baseKnockback));
+    private void OnTriggerEnter(Collider other) {
+        if (other.TryGetComponent<IDamageable>(out IDamageable obj) && other.CompareTag("Enemy") && other.isTrigger == false) {
+            if (ComboNumber > 2)
+                obj.TakeDamage(baseDamage, finalStun);
+            else
+                obj.TakeDamage(finalDamage, baseStun);
         }
     }
 }

@@ -242,7 +242,7 @@ MonoBehaviour:
   attackBox: {fileID: 1980880113259112396}
   HP: 60
   playerFaceSpeed: 10
-  speedChase: 2.57
+  speedChase: 5.95
   invincibilityTimer: 0.6
   attackRate: 2
   damage: 10

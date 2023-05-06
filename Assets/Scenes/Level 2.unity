@@ -340,7 +340,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 134350370}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.81, y: -5.58, z: -36.73}
+  m_LocalPosition: {x: -14.95, y: 0, z: -35.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5486,7 +5486,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4381802515589941526, guid: ea078652ab29b7b4e9a6458222e9dfa9, type: 3}
       propertyPath: vikingSlimeLocation.Array.size
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4381802515589941526, guid: ea078652ab29b7b4e9a6458222e9dfa9, type: 3}
       propertyPath: catSlimeLocation.Array.data[0].y
@@ -5847,6 +5847,22 @@ PrefabInstance:
     - target: {fileID: 4381802515589941526, guid: ea078652ab29b7b4e9a6458222e9dfa9, type: 3}
       propertyPath: vikingSlimeLocation.Array.data[3].y
       value: -37
+      objectReference: {fileID: 0}
+    - target: {fileID: 4381802515589941526, guid: ea078652ab29b7b4e9a6458222e9dfa9, type: 3}
+      propertyPath: vikingSlimeLocation.Array.data[4].x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4381802515589941526, guid: ea078652ab29b7b4e9a6458222e9dfa9, type: 3}
+      propertyPath: vikingSlimeLocation.Array.data[4].y
+      value: -31
+      objectReference: {fileID: 0}
+    - target: {fileID: 4381802515589941526, guid: ea078652ab29b7b4e9a6458222e9dfa9, type: 3}
+      propertyPath: vikingSlimeLocation.Array.data[5].x
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4381802515589941526, guid: ea078652ab29b7b4e9a6458222e9dfa9, type: 3}
+      propertyPath: vikingSlimeLocation.Array.data[5].y
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 4381802515589941527, guid: ea078652ab29b7b4e9a6458222e9dfa9, type: 3}
       propertyPath: m_RootOrder

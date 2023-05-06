@@ -53,7 +53,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         } else {
             agent.speed = speedChase;
             raycastPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-            if (agent.isActiveAndEnabled /*&& !anim.GetBool("Dead")*/) {
+            if (agent.isActiveAndEnabled && !anim.GetBool("Dead")) {
 
                 ApproachPlayer();
 
@@ -125,7 +125,6 @@ public class EnemyAI : MonoBehaviour, IDamageable
     }
 
     public IEnumerator Die() {
-        //GameManager.instance.currentRoom.GetComponent<LevelSpawner>().EnemyKilled();
         anim.SetBool(("Dead"), true);
         agent.enabled = false;
         GetComponent<EnemyAI>().enabled = false;
@@ -138,9 +137,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
         GameManager.instance.currentLevel.EnemyKilled();
 
-        yield return new WaitForSeconds(0.5f);
-        rb.useGravity = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.6f);
         Destroy(gameObject);
     }
 

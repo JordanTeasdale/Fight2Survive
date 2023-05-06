@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     [Header("-----Player Attributes-----")]
     [SerializeField] float playerSpeed;
-    [SerializeField] float sprintMulti;
     [SerializeField] float attackSpeed;
     [SerializeField] float comboTime;
     [SerializeField] float invincibilityTimer;
@@ -28,15 +27,12 @@ public class PlayerController : MonoBehaviour, IDamageable {
     public bool isDead = false;
     public bool fullyRevived = true;
 
-    public event System.Action<AnimationEvent> OnSwing;
-
-
     Vector3 playerVelocity;
-    Vector3 move = Vector3.zero;
+    Vector3 move;
     Animator animator;
     public SkinnedMeshRenderer rend;
 
-    public int HPOrig;
+    int HPOrig;
     int prevHP;
     float healthSmoothTime = 0.5f;
     float healthSmoothCount;
@@ -45,7 +41,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     // Player States
     bool isAttacking = false;
-    public int ComboNumber = 1;
+    int ComboNumber = 1;
     float comboTimer;
 
 
@@ -113,11 +109,6 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     public void Respawn() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        /*isDead = false;
-        healthSmoothCount = 0;
-        transform.position = GameManager.instance.RespawnPos.transform.position;
-        controller.enabled = true;*/
-
     }
 
     public void TakeDamage(int _damage, float _stun) {
@@ -155,8 +146,6 @@ public class PlayerController : MonoBehaviour, IDamageable {
     public IEnumerator FirstDeath() {
         isDead = true;
         yield return new WaitForSeconds(1.728f);
-        //GameManager.instance.CursorLockPause();
-        //GameManager.instance.isPaused = true;
     }
 
     public void ResetHP() {

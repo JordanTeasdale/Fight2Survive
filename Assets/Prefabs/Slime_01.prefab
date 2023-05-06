@@ -195,9 +195,9 @@ GameObject:
   - component: {fileID: 4019732914354906516}
   - component: {fileID: 4618244671972006196}
   - component: {fileID: 8087738984351705990}
-  - component: {fileID: 5263609695951995279}
   - component: {fileID: 1980880113259112396}
   - component: {fileID: 1237488605735528060}
+  - component: {fileID: 2060747770852922364}
   m_Layer: 0
   m_Name: Slime_01
   m_TagString: Enemy
@@ -239,12 +239,13 @@ MonoBehaviour:
   anim: {fileID: 1237488605735528060}
   rb: {fileID: 8087738984351705990}
   attackBox: {fileID: 1980880113259112396}
-  HP: 93
-  playerFaceSpeed: 2
+  HP: 40
+  playerFaceSpeed: 8
   speedChase: 4.19
-  invincibilityTimer: 1
-  attackRate: 0.9
-  damage: 3
+  invincibilityTimer: 0.6
+  attackRate: 1.5
+  damage: 6
+  stunTimer: 0
 --- !u!195 &4618244671972006196
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -283,19 +284,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &5263609695951995279
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5485998962929184189}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.32
-  m_Center: {x: 0, y: 0.19, z: 0}
 --- !u!65 &1980880113259112396
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -330,6 +318,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!136 &2060747770852922364
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5485998962929184189}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.14
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &6547522448609697061
 GameObject:
   m_ObjectHideFlags: 0

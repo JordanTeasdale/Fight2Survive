@@ -46,8 +46,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enviroment: []
-  baseSlime: {fileID: 0}
+  baseSlime: {fileID: 5485998962929184189, guid: bcd00cebf98b9dc44a4c63a1cbe867a1, type: 3}
+  catSlime: {fileID: 5485998962929184189, guid: 78d93b49679ed324fa75506edb014a1f, type: 3}
+  vikingSlime: {fileID: 5485998962929184189, guid: d10f5b2671af7b34ca64cf570789a14e, type: 3}
   baseSlimeLocation: []
+  catSlimeLocation: []
+  vikingSlimeLocation: []
   currentLevel: 1
   enemiesAlive: 0
 --- !u!65 &4381802515589941609

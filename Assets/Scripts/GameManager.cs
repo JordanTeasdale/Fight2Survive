@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour {
     public Image playerHPBar;
     public GameObject roomClearedFeedback;
     public GameObject ScreenFader;
+    public LevelSpawner currentLevel;
 
     public bool isMainOptionsMenu;
     public bool isPaused = false;
@@ -43,7 +44,7 @@ public class GameManager : MonoBehaviour {
             playerScript = player.GetComponent<PlayerController>();
 
             //RespawnPos = GameObject.FindGameObjectWithTag("Respawn Pos");
-            playerScript.Respawn();
+            //playerScript.Respawn();
 
 
         } else

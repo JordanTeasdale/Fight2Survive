@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IDamageable {
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     // Player States
     bool isAttacking = false;
-    public int ComboNumber = 0;
+    public int ComboNumber = 1;
     float comboTimer;
 
 
@@ -63,7 +64,6 @@ public class PlayerController : MonoBehaviour, IDamageable {
             damageTimer -= Time.deltaTime;
 
         if (!isDead && fullyRevived) {
-            Debug.Log("Active");
             PlayerMovement();
 
             if (Input.GetKeyDown("mouse 0")) {
@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
         //Adding the move vector to the character controller
         controller.Move(move * playerSpeed * Time.deltaTime);
 
+        playerVelocity.y -= Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 
         if (move != Vector3.zero) {
@@ -111,11 +112,11 @@ public class PlayerController : MonoBehaviour, IDamageable {
     }
 
     public void Respawn() {
-        isDead = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        /*isDead = false;
         healthSmoothCount = 0;
-        //controller.enabled = false;
         transform.position = GameManager.instance.RespawnPos.transform.position;
-        controller.enabled = true;
+        controller.enabled = true;*/
 
     }
 
@@ -171,7 +172,6 @@ public class PlayerController : MonoBehaviour, IDamageable {
             isAttacking = true;
             animator.SetTrigger("Attack");
             animator.SetInteger("Action", ComboNumber);
-            ComboNumber++;
             attackBox.enabled = true;
             yield return new WaitForSeconds(0.5f);
             attackBox.enabled = false;
@@ -182,6 +182,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
                 comboTimer = 0;
             else
                 comboTimer = comboTime;
+            ComboNumber++;
         }
     }
 
@@ -198,9 +199,9 @@ public class PlayerController : MonoBehaviour, IDamageable {
     private void OnTriggerEnter(Collider other) {
         if (other.TryGetComponent<IDamageable>(out IDamageable obj) && other.CompareTag("Enemy") && other.isTrigger == false) {
             if (ComboNumber > 2)
-                obj.TakeDamage(baseDamage, finalStun);
+                obj.TakeDamage(finalDamage, finalStun);
             else
-                obj.TakeDamage(finalDamage, baseStun);
+                obj.TakeDamage(baseDamage, baseStun);
         }
     }
 }

@@ -103,7 +103,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         if (damageTimer <= 0) {
             damageTimer = invincibilityTimer;
             if (!anim.GetBool("Dead")) {
-                HP -= damage;
+                HP -= _damage;
 
                 if (HP > 0) {
                     anim.SetInteger("DamageType", 1);
@@ -137,7 +137,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         foreach (Collider child in GetComponentsInChildren<Collider>())
             child.enabled = false;
 
-        //GetComponent<Animator>().enabled = false;
+        GameManager.instance.currentLevel.EnemyKilled();
 
         yield return new WaitForSeconds(0.5f);
         rb.useGravity = true;

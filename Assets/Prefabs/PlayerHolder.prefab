@@ -204,95 +204,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 13681452, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-      propertyPath: m_Radius
-      value: 0.98
-      objectReference: {fileID: 0}
-    - target: {fileID: 13681452, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 13681452, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2835553132922688860, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-      propertyPath: orthographic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3817136778348092500, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3817136778348092500, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-      propertyPath: attackBox
-      value: 
-      objectReference: {fileID: 2263924868386348610}
     - target: {fileID: 3817136778348092500, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
       propertyPath: cameraMain
       value: 
       objectReference: {fileID: 5729855542986490385}
     - target: {fileID: 3817136778348092500, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-      propertyPath: attackSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3817136778348092500, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
       propertyPath: camRotPoint
       value: 
       objectReference: {fileID: 5729855543330811743}
     - target: {fileID: 3817136778348092500, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-      propertyPath: playerSpeed
-      value: 10
+      propertyPath: invincibilityTimer
+      value: 0.3
       objectReference: {fileID: 0}
-    - target: {fileID: 3910629691582235579, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-      propertyPath: m_Height
-      value: 2.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 5017534650387526875, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5759559623152616827, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-      propertyPath: controller
-      value: 
-      objectReference: {fileID: 8773524164584180879}
-    - target: {fileID: 5759559623152616827, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-      propertyPath: playerSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6380397243379186635, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-      propertyPath: m_TagString
-      value: MainCamera
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5759559623152616827, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-    - {fileID: 5400000, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
---- !u!1 &5729855544437754256 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100004, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-  m_PrefabInstance: {fileID: 5729855544437657396}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &2263924868386348610
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5729855544437754256}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.4503245, y: 1.8633908, z: 3.1722243}
-  m_Center: {x: 0.08730081, y: -0.4316954, z: 2.215912}
 --- !u!4 &5729855544437790128 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
-  m_PrefabInstance: {fileID: 5729855544437657396}
-  m_PrefabAsset: {fileID: 0}
---- !u!143 &8773524164584180879 stripped
-CharacterController:
-  m_CorrespondingSourceObject: {fileID: 3910629691582235579, guid: b1cc94d26cd016d479aa5b522d88da0a, type: 3}
   m_PrefabInstance: {fileID: 5729855544437657396}
   m_PrefabAsset: {fileID: 0}

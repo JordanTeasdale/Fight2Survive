@@ -8,6 +8,7 @@ public class Perseverance : MonoBehaviour
     [SerializeField] Image PerseveranceBar;
     [SerializeField] GameObject aKey;
     [SerializeField] GameObject dKey;
+    [SerializeField] GameObject DeathScreen;
 
     static int deathCount = 0;
     float decayRate;
@@ -27,13 +28,18 @@ public class Perseverance : MonoBehaviour
 
         if (PerseveranceBar.fillAmount >= 0.98) {
             GameManager.instance.playerScript.Revive();
-            PerseveranceBar.fillAmount = 0;
+            PerseveranceBar.fillAmount = 0.5f;
             isActive = false;
+            DeathScreen.SetActive(false);
+        }
+        else if (PerseveranceBar.fillAmount <= 0.02) {
+            StartCoroutine(Death());
         }
     }
 
     public void ResetBar() {
         if (!isActive) {
+            PerseveranceBar.enabled = true;
             isActive = true;
             PerseveranceBar.fillAmount = 0.5f;
             regenRate = 0.02f;
@@ -61,5 +67,13 @@ public class Perseverance : MonoBehaviour
             PerseveranceBar.fillAmount += regenRate;
             StartCoroutine(PerservA());
         }
+    }
+
+    IEnumerator Death() {
+        DeathScreen.SetActive(true);
+        PerseveranceBar.enabled = false;
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+        GameManager.instance.playerScript.Respawn();
+        Debug.Log("Respawn");
     }
 }

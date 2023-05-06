@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3910629691582235579}
   - component: {fileID: 3817136778348092500}
   - component: {fileID: 13681452}
+  - component: {fileID: 2263924868386348610}
   m_Layer: 0
   m_Name: RPG-Character
   m_TagString: Player
@@ -46,7 +47,7 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
+  m_Height: 2.91
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -71,11 +72,22 @@ MonoBehaviour:
   controller: {fileID: 3910629691582235579}
   cameraMain: {fileID: 0}
   camRotPoint: {fileID: 0}
+  attackBox: {fileID: 2263924868386348610}
   playerSpeed: 10
   sprintMulti: 0
-  HP: 30
+  attackSpeed: 1
+  comboTime: 2
+  invincibilityTimer: 1
+  baseDamage: 10
+  finalDamage: 20
+  baseStun: 1.5
+  finalStun: 3
+  HP: 100
   isDead: 0
-  HPOrig: 5
+  fullyRevived: 1
+  rend: {fileID: 0}
+  HPOrig: 100
+  ComboNumber: 0
 --- !u!136 &13681452
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -85,11 +97,24 @@ CapsuleCollider:
   m_GameObject: {fileID: 100004}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.6
+  m_Enabled: 0
+  m_Radius: 0.98
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: -0.26, z: 0}
+--- !u!65 &2263924868386348610
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100004}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 4.4503245, y: 1.8633908, z: 3.1722243}
+  m_Center: {x: 0.08730081, y: -0.4316954, z: 2.215912}
 --- !u!1 &629156792
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,6 +289,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 7ff0cf27ed8e9684b9bdd381bab1f846, type: 2}
+    - target: {fileID: 9500000, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 13700004, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
